@@ -5,6 +5,7 @@
 #include "totp.h"
 #include <QTimer>
 #include <QDateTime>
+#include <QRegularExpression>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,12 +26,6 @@ MainWindow::~MainWindow()
 }
 
 
-#include <QRegularExpression>
-#include <QMessageBox>
-
-#include <QRegularExpression>
-#include <QMessageBox>
-
 void MainWindow::onAddResourceClicked() {
     AddResourceDialog dlg(this);
     bool dataValid = false;
@@ -50,7 +45,7 @@ void MainWindow::onAddResourceClicked() {
         }
 
         // Проверка Base32
-        QRegularExpression base32Regex("^[A-Z2-7]+=*$");
+        static const QRegularExpression base32Regex("^[A-Z2-7]+=*$");
         if (!base32Regex.match(key).hasMatch()) {
             QMessageBox::warning(&dlg, "Ошибка",
                                  "Неверный формат ключа. Допустимые символы: A-Z, 2-7, '=' (выравнивание).\n"
